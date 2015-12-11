@@ -1,8 +1,11 @@
 Package: synapseCopyProject
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Copy a Synapse Project
 Version: 0.1.0
 Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Description: Make a copy a Synapse Project to a new Synapse Project.
+License: file LICENSE
 LazyData: TRUE
+RoxygenNote: 5.0.1
+Depends: R (>= 2.15)
+Imports: synapseClient

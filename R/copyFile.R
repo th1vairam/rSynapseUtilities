@@ -4,23 +4,23 @@ copyFile <- function(fileId, parentId, version, setAnnotations=TRUE, setActivity
                                   downloadFile = TRUE)
 
   # Create a new file
-  newFile <- File(file=synapseClient::getFileLocation(myFile),
-                  name=synapseClient::synGetProperties(myFile)$name,
-                  parentId=parentId)
+  newFile <- synapseClient::File(file=synapseClient::getFileLocation(myFile),
+                                 name=synapseClient::synGetProperties(myFile)$name,
+                                 parentId=parentId)
 
   if (setAnnotations) {
-  synSetAnnotations(newFile) <- synGetAnnotations(myFile)
+    synapseClient::synSetAnnotations(newFile) <- synapseClient::synGetAnnotations(myFile)
   }
 
   if (setActivity) {
-    generatedBy(newFile) <- synGetActivity(myFile, version)
+    synapseClient::generatedBy(newFile) <- synapseClient::synGetActivity(myFile, version)
   }
 
   synapseClient::synStore(newFile)
 }
 
 copyFileAllVersions <- function(fileId, parentId) {
-  res <- synRestGET(sprintf('/entity/%s/version', fileId))
+  res <- synapseClient::synRestGET(sprintf('/entity/%s/version', fileId))
 
   obj <- lapply(rev(res$results),
                 function(x) copyFile(fileId=x$id,

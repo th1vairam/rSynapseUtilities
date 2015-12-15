@@ -2,7 +2,9 @@ Package: synapseCopyProject
 Type: Package
 Title: Copy a Synapse Project
 Version: 0.1.0
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
+Authors@R: c(
+    person("Ben", "Logsdon", email = "first.last@example.com", role = c("aut", "cre")),
+    person("Kenneth", "Daily", email = "first.last@example.com", role = c("aut")))
 Description: Make a copy a Synapse Project to a new Synapse Project.
 License: file LICENSE
 LazyData: TRUE

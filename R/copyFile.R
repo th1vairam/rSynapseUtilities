@@ -4,7 +4,7 @@ copyFile <- function(fileId, parentId, version, setAnnotations=TRUE, setActivity
                                   downloadFile = TRUE)
 
   # Create a new file
-  newFile <- synapseClient::File(file=synapseClient::getFileLocation(myFile),
+  newFile <- synapseClient::File(path=synapseClient::getFileLocation(myFile),
                                  name=synapseClient::synGetProperties(myFile)$name,
                                  parentId=parentId)
 

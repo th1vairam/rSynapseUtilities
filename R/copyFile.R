@@ -13,7 +13,7 @@ copyFile <- function(fileId, parentId, version, setAnnotations=TRUE, setActivity
   }
 
   if (setActivity) {
-    synapseClient::generatedBy(newFile) <- synapseClient::synGetActivity(myFile, version)
+    synapseClient::generatedBy(newFile) <- synapseClient::synGetActivity(myFile)
   }
 
   synapseClient::synStore(newFile)

@@ -1,4 +1,5 @@
 ###function to crawl directory structure and return the structure
+#' @export
 crawlSynapseObject <- function(synId,G=NULL){
   #depth first search
   #source('adjacentEdges.R')

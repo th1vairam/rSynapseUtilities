@@ -2,6 +2,8 @@
 ###Make new folders
 ###Move files in a given folder
 ###Replace old files with Links
+
+#' @export
 copyProject <- function(synId,G,Q=NULL,topId){
   ######Run a depth first search
   if(is.null(Q)){
@@ -34,7 +36,7 @@ copyProject <- function(synId,G,Q=NULL,topId){
         if(G$type[e[i]]=='org.sagebionetworks.repo.model.Folder'){
           #check if folder already exists
           Q$newid[e[i]] <- makeNewFolder(synId,e[i],Q,G);
-          Q <- populateNewDirectory2(e[i],G,Q,topId);
+          Q <- copyProject(e[i],G,Q,topId);
         }else if (G$type[e[i]]=='org.sagebionetworks.repo.model.FileEntity'){
           #moveFile(e[i],Q$newid[synId]);
           #makeLink(G$name[e[i]],e[i],synId)
@@ -42,8 +44,7 @@ copyProject <- function(synId,G,Q=NULL,topId){
           w1 <- which(Q$adj[,Q$newid[e[i]]]==1)
           #print(Q$newid[w1])
           print(c(G$name[e[i]],Q$newid[w1],e[i]))
-
-          makeLink(fileId=as.character(e[i]),parentId=as.character(Q$newid[w1]),linkName=as.character(G$name[e[i]]))
+          copyFile(fileId=as.character(e[i]),parentId=as.character(Q$newid[w1]),version=NULL)
         } else{
           stop('Object type not recognized\n')
         }

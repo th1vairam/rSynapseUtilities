@@ -5,7 +5,7 @@ Version: 0.1.0
 Authors@R: c(
     person("Ben", "Logsdon", email = "first.last@example.com", role = c("aut", "cre")),
     person("Kenneth", "Daily", email = "first.last@example.com", role = c("aut")))
-Description: Make a copy a Synapse Project to a new Synapse Project.
+Description: Make a copy of a Synapse Project to a new Synapse Project.
 License: file LICENSE
 LazyData: TRUE
 RoxygenNote: 5.0.1

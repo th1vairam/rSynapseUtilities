@@ -1,0 +1,43 @@
+---
+title: "Vignette Title"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Example for using the `synapseCopyProject` package.
+
+```{r}
+library(synapseClient)
+library(synapseCopyProject)
+
+synapseLogin()
+
+# Old project
+oldPId <- "syn5554060"
+oldP <- synGet(oldPId)
+
+# New project will be copy of the old one
+newP <- synStore(Project(name=paste("Copy of", oldP@properties$name)))
+
+# Crawl it
+G <- crawlSynapseObject(oldPId)
+
+# Perform a copy
+pC <- copyProject(newP@properties$id, G, topId=newP@properties$id)
+
+# Create entity mapping to update wikis
+entityMap <- pC$newid
+names(entityMap) <- G$id
+
+# copy Wikis
+res <- lapply(seq_along(entityMap), 
+              function(i) tryCatch(copyWiki(names(entityMap[i]), entityMap[i],
+                                            entityMap = entityMap),
+                                   error=function(e) NULL))
+newP <- synDelete(newP)
+```

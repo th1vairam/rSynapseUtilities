@@ -1,20 +1,17 @@
-#####
-## FUNCTION FOR COPYING ALL SYNAPSE WIKI CONTENT (AND SUBPAGES) FROM ONE OWNER RESOURCE TO ANOTHER
 ## AUTHOR: BRIAN M. BOT
-#####
-## ARGUMENTS:
-##   oldOwnerId - the Synapse ID of the resource (e.g. Project) to copy the wiki content from
-##   newOwnerId - the Synapse ID of the resource (e.g. Project) to copy the wiki content to
-#####
-## VALUE:
-##   Silently returns the Wiki headers from the new owner
-#####
-## NOTES:
-##   If a the newOwnerId already has a Wiki page associated with it, the function fails
-#####
 
+#' Copy all Synapse Wiki content (including sub-pages) from one owner Entity to another.
+#'
+#' If a the newOwnerId already has a Wiki page associated with it, the function fails
+#'
+#' @param oldOwnerId the Synapse ID of the resource (e.g. Project) to copy the wiki content from.
+#' @param newOwnerId the Synapse ID of the resource (e.g. Project) to copy the wiki content to.
+#' @param updateLinks Update the internal Wiki sub-page links.
+#' @param updateSynIds Update Synapse entity IDs reference in the Wiki using the supplied entityMap.
+#' @param entityMap a list whose keys are the original Synapse entity IDs referenced in the Wiki pages and values are new IDs.
+#' @return The Wiki headers from the new owner.
 #' @export
-copyWiki <- function(oldOwnerId, newOwnerId, entityMap=NULL){
+copyWiki <- function(oldOwnerId, newOwnerId, updateLinks=TRUE, updateSynIds=TRUE, entityMap=NULL){
   oldOwn <- synapseClient::synGet(oldOwnerId)
   oldWh <- synapseClient::synGetWikiHeaders(oldOwn)
 

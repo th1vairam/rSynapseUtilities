@@ -1,6 +1,6 @@
-Package: synapseCopyProject
+Package: rSynapseUtilities
 Type: Package
-Title: Copy a Synapse Project
+Title: Synapse utility functions
 Version: 0.1.0
 Authors@R: c(
     person("Ben", "Logsdon", email = "first.last@example.com", role = c("aut", "cre")),

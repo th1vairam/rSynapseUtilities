@@ -56,7 +56,7 @@ copyWiki <- function(oldOwnerId, newOwnerId, updateLinks=TRUE, updateSynIds=TRUE
       # go through each wiki page once more:
       newWikiId<-wikiIdMap[[oldWikiId]]
       newWiki<-newWikis[[newWikiId]]
-      cat(sprintf("\tPage: %s\n", newWikiId))
+      cat(sprintf("\tUpdating internal links Page: %s\n", newWikiId))
       s<-newWiki@properties$markdown
       # in the markdown field, replace all occurrences of oldOwnerId/wiki/abc with newOwnerId/wiki/xyz,
       # where wikiIdMap maps abc->xyz
@@ -68,38 +68,40 @@ copyWiki <- function(oldOwnerId, newOwnerId, updateLinks=TRUE, updateSynIds=TRUE
       }
       # now replace any last references to oldOwnerId with newOwnerId
       s<-gsub(oldOwnerId, newOwnerId, s, fixed=TRUE)
-      
+
       newWikis[[newWikiId]]@properties$markdown <- s
-      
+
     }
   }
-  
+
   if (updateSynIds & !is.null(entityMap)) {
     cat("Updating Synapse references:\n")
     for (oldWikiId in names(wikiIdMap)) {
       # go through each wiki page once more:
       newWikiId<-wikiIdMap[[oldWikiId]]
       newWiki<-newWikis[[newWikiId]]
-      cat(sprintf("\tPage: %s\n", newWikiId))
+      cat(sprintf("\tUpdating Synapse references for Page: %s\n", newWikiId))
       s<-newWiki@properties$markdown
-      
+
       for (oldSynId in names(entityMap)) {
         # go through each wiki page once more:
         newSynId<-entityMap[[oldSynId]]
         s<-gsub(oldSynId, newSynId, s, fixed=TRUE)
       }
-      cat("Done updating Synapse IDs.\n")
+      cat("\tDone updating Synapse IDs.\n")
       newWikis[[newWikiId]]@properties$markdown <- s
     }
   }
-  
+
+  # update the wiki pages
+  cat("Storing new Wikis: %s\n")
   for (oldWikiId in names(wikiIdMap)) {
-    # go through each wiki page once more:
     newWikiId <- wikiIdMap[[oldWikiId]]
-    # update the wiki page
     newWikis[[newWikiId]] <- synapseClient::synStore(newWikis[[newWikiId]])
+    cat(sprintf("\tStored: %s\n", newWikiId))
+
   }
-  
+
   newWh <- synapseClient::synGetWikiHeaders(newOwn)
   return(invisible(newWh))
 }

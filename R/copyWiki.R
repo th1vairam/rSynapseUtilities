@@ -94,7 +94,7 @@ copyWiki <- function(oldOwnerId, newOwnerId, updateLinks=TRUE, updateSynIds=TRUE
   }
 
   # update the wiki pages
-  cat("Storing new Wikis: %s\n")
+  cat("Storing new Wikis\n")
   for (oldWikiId in names(wikiIdMap)) {
     newWikiId <- wikiIdMap[[oldWikiId]]
     newWikis[[newWikiId]] <- synapseClient::synStore(newWikis[[newWikiId]])

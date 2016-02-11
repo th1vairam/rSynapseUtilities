@@ -9,7 +9,7 @@ Requires the [`rSynapseClient`](https://www.github.com/Sage-Bionetworks/rSynapse
 Using `devtools`:
 
 ```
-devtools::install_github("SageBionetworks/synapseUtilities")
+devtools::install_github("Sage-Bionetworks/rSynapseUtilities")
 ```
 
 ## Features

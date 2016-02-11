@@ -49,40 +49,57 @@ copyWiki <- function(oldOwnerId, newOwnerId, updateLinks=TRUE, updateSynIds=TRUE
     newWikis[[wNew@properties$id]]<-wNew
     wikiIdMap[[w@properties$id]] <- wNew@properties$id
   }
-  cat("Updating internal links:\n")
-  for (oldWikiId in names(wikiIdMap)) {
-    # go through each wiki page once more:
-    newWikiId<-wikiIdMap[[oldWikiId]]
-    newWiki<-newWikis[[newWikiId]]
-    cat(sprintf("\tPage: %s\n", newWikiId))
-    s<-newWiki@properties$markdown
-    # in the markdown field, replace all occurrences of oldOwnerId/wiki/abc with newOwnerId/wiki/xyz,
-    # where wikiIdMap maps abc->xyz
-    # replace <oldOwnerId>/wiki/<oldWikiId> with <newOwnerId>/wiki/<newWikiId>
-    for (oldWikiId2 in names(wikiIdMap)) {
-      oldProjectAndWikiId<-sprintf("%s/wiki/%s", oldOwnerId, oldWikiId2)
-      newProjectAndWikiId<-sprintf("%s/wiki/%s", newOwnerId, wikiIdMap[[oldWikiId2]])
-      s<-gsub(oldProjectAndWikiId, newProjectAndWikiId, s, fixed=TRUE)
-    }
-    # now replace any last references to oldOwnerId with newOwnerId
-    s<-gsub(oldOwnerId, newOwnerId, s, fixed=TRUE)
 
-    if (!is.null(entityMap)) {
-      cat("Updating Synapse references:\n")
+  if (updateLinks) {
+    cat("Updating internal links:\n")
+    for (oldWikiId in names(wikiIdMap)) {
+      # go through each wiki page once more:
+      newWikiId<-wikiIdMap[[oldWikiId]]
+      newWiki<-newWikis[[newWikiId]]
+      cat(sprintf("\tPage: %s\n", newWikiId))
+      s<-newWiki@properties$markdown
+      # in the markdown field, replace all occurrences of oldOwnerId/wiki/abc with newOwnerId/wiki/xyz,
+      # where wikiIdMap maps abc->xyz
+      # replace <oldOwnerId>/wiki/<oldWikiId> with <newOwnerId>/wiki/<newWikiId>
+      for (oldWikiId2 in names(wikiIdMap)) {
+        oldProjectAndWikiId<-sprintf("%s/wiki/%s", oldOwnerId, oldWikiId2)
+        newProjectAndWikiId<-sprintf("%s/wiki/%s", newOwnerId, wikiIdMap[[oldWikiId2]])
+        s<-gsub(oldProjectAndWikiId, newProjectAndWikiId, s, fixed=TRUE)
+      }
+      # now replace any last references to oldOwnerId with newOwnerId
+      s<-gsub(oldOwnerId, newOwnerId, s, fixed=TRUE)
+      
+      newWikis[[newWikiId]]@properties$markdown <- s
+      
+    }
+  }
+  
+  if (updateSynIds & !is.null(entityMap)) {
+    cat("Updating Synapse references:\n")
+    for (oldWikiId in names(wikiIdMap)) {
+      # go through each wiki page once more:
+      newWikiId<-wikiIdMap[[oldWikiId]]
+      newWiki<-newWikis[[newWikiId]]
+      cat(sprintf("\tPage: %s\n", newWikiId))
+      s<-newWiki@properties$markdown
+      
       for (oldSynId in names(entityMap)) {
         # go through each wiki page once more:
         newSynId<-entityMap[[oldSynId]]
         s<-gsub(oldSynId, newSynId, s, fixed=TRUE)
       }
       cat("Done updating Synapse IDs.\n")
+      newWikis[[newWikiId]]@properties$markdown <- s
     }
-
-    newWiki@properties$markdown<-s
-    # update the wiki page
-    newWiki<-synapseClient::synStore(newWiki)
   }
-  cat("Done updating internal links.\n")
-
+  
+  for (oldWikiId in names(wikiIdMap)) {
+    # go through each wiki page once more:
+    newWikiId <- wikiIdMap[[oldWikiId]]
+    # update the wiki page
+    newWikis[[newWikiId]] <- synapseClient::synStore(newWikis[[newWikiId]])
+  }
+  
   newWh <- synapseClient::synGetWikiHeaders(newOwn)
   return(invisible(newWh))
 }

@@ -1,8 +1,9 @@
 ## AUTHOR: BRIAN M. BOT
 
-#' Copy all Synapse Wiki content (including sub-pages) from one owner Entity to another.
+#' Copy A Synapse Wiki
 #'
-#' If a the newOwnerId already has a Wiki page associated with it, the function fails
+#' Copy all Synapse Wiki content (including sub-pages) from one owner Entity to another.
+#' If a newOwnerId already has a Wiki page associated with it, the function will fail.
 #'
 #' @param oldOwnerId the Synapse ID of the resource (e.g. Project) to copy the wiki content from.
 #' @param newOwnerId the Synapse ID of the resource (e.g. Project) to copy the wiki content to.

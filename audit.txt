@@ -1,0 +1,37 @@
+deprecate
+-crawlSynapseEntity ( crawlSynapseObject/crawlSynapseObjectList)
+-longQueries (already exists in synQuery with appropriate blocksize flag)
+-moveFolder (not in use)
+-postProcessDirectory
+
+sageInternal
+-adjacentEdges (should be deprectaed eventually)
+-auditProject (should be deprectaed eventually)
+-auditSingleFile (should be deprecated eventually)
+-auditSummaryByFolder (should be deprectaed eventually)
+-copyProject
+-crawlProject (should be deprectaed eventually)
+-crawlSynapseObject (should be deprectaed eventually)
+-crawlSynapseObjectList
+-makeHeadFolder (should be deprecated eventually)
+-makeNewFolder (should be deprectaed eventually, utility function for migration scripts)
+-moveSingleFile (should be deprecated/changed part of migration scripts)
+-populateInternalDirectoryMigration (should be deprecated/changed part of migration scripts)
+-populateNewDirectory (should be deprecated/changed part of migration scripts)
+-populateNewDirectory2 (should be deprecated/changed part of migration scripts)
+-replaceSingleAnnotationField (changeKey, better name)
+-reverseLink (maybe rename, it backtracks a link to original location)
+-updateAnnotations (prototype of batch annotation update service)
+
+pushToSynapseClient
+-mintDOI
+-copyFile (should be just copy)
+-copyWiki
+-makeLink
+-makeTable (with modifications, check what as.tableColumns does because it pushes to Synapse)
+-getTable (or modify select *?, something useful to grab a table without specifying everything)
+-moveFile/moveFolder2 (should be move)
+
+February 12th Action Items for February 22nd meeting
+1) Add ROxygen documentation to functions that are not going to be deprecated prior to next meeting
+2) Figure out how to write tests for mintDOI to integrate it into synapseClient with Bruce's help at Feb 26th meeting

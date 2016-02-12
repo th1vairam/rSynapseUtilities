@@ -1,4 +1,4 @@
-Package: synapseUtilities
+Package: rSynapseUtilities
 Type: Package
 Title: Utility functions for interacting with Synapse
 Version: 0.1.0

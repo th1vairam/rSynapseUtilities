@@ -1,7 +1,8 @@
-#' @export
+#' Copy A Synapse Table
 #' @param tableId Synapse ID of the table to copy.
 #' @param parentId Synapse ID of the project to copy this table to.
 #' @param setAnnotations Copy the annotations from the existing table to the new copy.
+#' @export
 copyTable <- function(tableId, parentId, setAnnotations=FALSE) {
 
   # Get the file
@@ -9,7 +10,7 @@ copyTable <- function(tableId, parentId, setAnnotations=FALSE) {
   myTableSchema <- synapseClient::synGet(tableId)
 
   # Query data from table
-  d <- synTableQuery(sprintf('select * from %s', foo@properties$id))@values
+  d <- synTableQuery(sprintf('select * from %s', myTableSchema@properties$id))@values
 
   # Remove row names, otherwise making a new table will try to perform
   # an update instead of insert
@@ -26,10 +27,15 @@ copyTable <- function(tableId, parentId, setAnnotations=FALSE) {
     synapseClient::synSetAnnotations(newTableSchema) <- synapseClient::synGetAnnotations(myTableSchema)
   }
 
-  newTable <- Table(tableSchema = newTableSchema, values=d)
+  if (nrow(d) > 0) {
+    cat(sprintf("Created new table using schema %s", synapseClient::synGetProperties(newTableSchema)$name))
+    newTable <- Table(tableSchema = newTableSchema, values=d)
+    newTable <- synStore(newTable)
+  } else {
+    cat(sprintf("No data, so storing schema %s", synapseClient::synGetProperties(newTableSchema)$name))
+    newTableSchema <- synStore(newTableSchema)
+  }
 
-  cat(sprintf("Created new table using schema %s", synapseClient::synGetProperties(newTableSchema)$name))
 
-  newTable <- synStore(newTable)
 
 }

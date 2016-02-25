@@ -2,6 +2,7 @@
 
 export(copyProject)
 export(copyProjectWikis)
+export(copyTable)
 export(copyWiki)
 export(crawlSynapseObject)
 export(crawlSynapseObjectList)

@@ -5,8 +5,15 @@ copyFile <- function(fileId, parentId, version, setAnnotations=TRUE, setActivity
   myFile <- synapseClient::synGet(fileId, version=version,
                                   downloadFile = FALSE)
 
+  # Check if this file is in Synapse. When getting a file through synGet
+  # with downloadFile=FALSE, if the file is in Synapse (not local or a link)
+  # a character(0) is returned for getFileLocation().
+  fileInSynapse <- length(getFileLocation(myFile)) == 0
 
-  if (!(grepl("^file:///",getFileLocation(myFile)))) {
+  # If the file is in Synapse, download it and make a new copy
+  # to go in the new project.
+  # If not, just make a new File that looks like the old one.
+  if (fileInSynapse) {
     myFile <- synapseClient::synGet(fileId, version=version,
                                     downloadFile = TRUE)
     # Create a new file

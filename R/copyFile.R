@@ -37,7 +37,7 @@ copyFile <- function(fileId, parentId, version, setAnnotations=TRUE, setActivity
   print(sprintf("Created new file %s", synapseClient::synGetProperties(newFile)$name))
 
   if (setAnnotations) {
-    synapseClient::synSetAnnotations(newFile) <- synapseClient::synGetAnnotations(myFile)
+    synapseClient::synSetAnnotations(newFile) <- as.list(synapseClient::synGetAnnotations(myFile))
   }
 
   if (setActivity) {

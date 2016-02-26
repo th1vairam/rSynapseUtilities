@@ -1,3 +1,4 @@
+#' @export
 copyFile <- function(fileId, parentId, version, setAnnotations=TRUE, setActivity=TRUE) {
   # Get the file
   print(sprintf("Getting file %s", fileId))

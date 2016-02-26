@@ -14,6 +14,7 @@ copyFile <- function(fileId, parentId, version, setAnnotations=TRUE, setActivity
   # to go in the new project.
   # If not, just make a new File that looks like the old one.
   if (fileInSynapse) {
+    cat(sprintf("Got file from Synapse to %s", synapseClient::getFileLocation(myFile)))
     myFile <- synapseClient::synGet(fileId, version=version,
                                     downloadFile = TRUE)
     # Create a new file
@@ -24,17 +25,16 @@ copyFile <- function(fileId, parentId, version, setAnnotations=TRUE, setActivity
   }
   else {
     # Create a new file
+    cat(sprintf("Got file from external reference to %s", synapseClient::getFileLocation(myFile)))
     newFile <- synapseClient::File(path=synapseClient::getFileLocation(myFile),
                                    name=synapseClient::synGetProperties(myFile)$name,
                                    parentId=parentId,
                                    synapseStore=FALSE)
   }
 
-  print(sprintf("Got file to %s", synapseClient::getFileLocation(myFile)))
-  print(sprintf("Putting new file in %s", parentId))
+  cat(sprintf("Putting new file in %s", parentId))
 
-
-  print(sprintf("Created new file %s", synapseClient::synGetProperties(newFile)$name))
+  cat(sprintf("Created new file %s", synapseClient::synGetProperties(newFile)$name))
 
   if (setAnnotations) {
     synapseClient::synSetAnnotations(newFile) <- as.list(synapseClient::synGetAnnotations(myFile))

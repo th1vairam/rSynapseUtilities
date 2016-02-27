@@ -44,7 +44,7 @@ copyProject <- function(synId,G,Q=NULL,topId){
           w1 <- which(Q$adj[,Q$newid[e[i]]]==1)
           #print(Q$newid[w1])
 
-          cat(sprintf("Copying file %s from %s to %s", G$name[e[i]],Q$newid[w1],e[i]))
+          cat(sprintf("Copying file %s from parent %s to parent %s\n", e[i], G$name[e[i]],Q$newid[w1]))
 
           copyFile(fileId=as.character(e[i]), parentId=as.character(Q$newid[w1]),version=NULL)
         }else if (G$type[e[i]]=='org.sagebionetworks.repo.model.table.TableEntity'){

@@ -47,8 +47,11 @@ copyFile <- function(fileId, parentId, version, setAnnotations=TRUE, setActivity
     synapseClient::generatedBy(newFile) <- synapseClient::synGetActivity(myFile)
   }
 
-  print(newFile)
   newFile <- synapseClient::synStore(newFile)
+
+  print(newFile)
+
+  newFile
 }
 
 copyFileAllVersions <- function(fileId, parentId) {

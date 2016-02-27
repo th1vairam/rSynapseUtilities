@@ -53,7 +53,7 @@ copyProject <- function(synId,G,Q=NULL,topId){
           print(c(G$name[e[i]],Q$newid[w1],e[i]))
           copyTable(tableId=as.character(e[i]), parentId=as.character(Q$newid[w1]))
         } else{
-          stop('Object type not recognized\n')
+          stop(sprintf('Object type not recognized for %s\n', e[i]))
         }
       } else {
         return(Q);

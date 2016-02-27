@@ -13,10 +13,10 @@
 #' @return The Wiki headers from the new owner.
 #' @export
 copyWiki <- function(oldOwnerId, newOwnerId, updateLinks=TRUE, updateSynIds=TRUE, entityMap=NULL){
-  oldOwn <- synapseClient::synGet(oldOwnerId, downloadFile=FALSE)
+  oldOwn <- synapseClient::synGet(oldOwnerId)
   oldWh <- synapseClient::synGetWikiHeaders(oldOwn)
 
-  newOwn <- synapseClient::synGet(newOwnerId, downloadFile=FALSE)
+  newOwn <- synapseClient::synGet(newOwnerId)
   wikiIdMap <- list()
   newWikis<-list()
   for( i in 1:length(oldWh) ){

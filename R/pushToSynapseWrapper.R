@@ -7,8 +7,6 @@ pushToSynapseWrapper <- function(df,
                                  executedVector,
                                  activityName1,
                                  activityDescription1){
-
-  library(synapseClient)
   synapseClient::synapseLogin()
 
   #write df to file
@@ -20,10 +18,10 @@ pushToSynapseWrapper <- function(df,
                              versionComment=comment)
 
   #apply annotations
-  synSetAnnotations(foo) = as.list(annos)
+  synapseClient::synSetAnnotations(foo) = as.list(annos)
 
   #push to synapse
-  foo = synStore(foo,
+  foo = synapseClient::synStore(foo,
                  used = as.list(usedVector),
                  executed = as.list(executedVector),
                  activityName = activityName1,

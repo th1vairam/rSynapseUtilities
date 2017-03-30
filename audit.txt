@@ -24,13 +24,13 @@ sageInternal
 -updateAnnotations (prototype of batch annotation update service)
 
 pushToSynapseClient
--mintDOI
--copyFile (should be just copy)
--copyWiki
--makeLink
--makeTable (with modifications, check what as.tableColumns does because it pushes to Synapse)
--getTable (or modify select *?, something useful to grab a table without specifying everything)
--moveFile/moveFolder2 (should be move)
+-mintDOI - JIRA-ed
+-copyFile (should be just copy) JIRA-ed
+-copyWiki JIRA-ed
+-makeLink -JIRA-ed
+-makeTable (with modifications, check what as.tableColumns does because it pushes to Synapse) JIRA-ed
+-getTable (or modify select *?, something useful to grab a table without specifying everything) JIRA-ed
+-moveFile/moveFolder2 (should be move) JIRA-ed
 
 February 12th Action Items for February 22nd meeting
 1) Add ROxygen documentation to functions that are not going to be deprecated prior to next meeting

@@ -4,7 +4,8 @@ makeTable <- function(df,tableName,projectId){
   tcresult<-as.tableColumns(df)
   cols<-tcresult$tableColumns
   fileHandleId<-tcresult$fileHandleId
-  schema<-TableSchema(name=tableName, parent=projectId, columns=cols)
+  project<- synGet(projectId)
+  schema<-TableSchema(name=tableName, parent=project, columns=cols)
   table<-Table(schema, fileHandleId)
   table<-synStore(table, retrieveData=TRUE)
 }

@@ -43,10 +43,20 @@ copyProject <- function(synId,G,Q=NULL,topId){
           #makeLink(G$name[e[i]],e[i],synId)
           w1 <- which(Q$adj[,Q$newid[e[i]]]==1)
           #print(Q$newid[w1])
+
+          cat(sprintf("Copying file named = %s, id = %s to parent %s\n", G$name[e[i]], e[i], Q$newid[w1]))
+
+          copyFile(fileId=as.character(e[i]), parentId=as.character(Q$newid[w1]),version=NULL)
+        }else if (G$type[e[i]]=='org.sagebionetworks.repo.model.table.TableEntity'){
+          w1 <- which(Q$adj[,Q$newid[e[i]]]==1)
+          #print(Q$newid[w1])
           print(c(G$name[e[i]],Q$newid[w1],e[i]))
-          copyFile(fileId=as.character(e[i]),parentId=as.character(Q$newid[w1]),version=NULL)
-        } else{
-          stop('Object type not recognized\n')
+          copyTable(tableId=as.character(e[i]), parentId=as.character(Q$newid[w1]))
+        }
+        else if (G$type[e[i]]=='org.sagebionetworks.repo.model.Link') {
+          cat(sprintf("Found Link at %s, skipping.", e[i]))
+        }else{
+          stop(sprintf('Object type not recognized for %s\n', e[i]))
         }
       } else {
         return(Q);

@@ -1,11 +1,11 @@
 Package: rSynapseUtilities
 Type: Package
-Title: Synapse utility functions
+Title: Utility functions for interacting with Synapse
 Version: 0.1.0
 Authors@R: c(
-    person("Ben", "Logsdon", email = "first.last@example.com", role = c("aut", "cre")),
-    person("Kenneth", "Daily", email = "first.last@example.com", role = c("aut")))
-Description: Make a copy of a Synapse Project to a new Synapse Project.
+    person("Ben", "Logsdon", email = "ben.logsdon@sagebase.org", role = c("aut", "cre")),
+    person("Kenneth", "Daily", email = "kenneth.daily@sagebase.org", role = c("aut")))
+Description: Crawl projects, copy projects, audit projects, general utility functions for interacting with Synapse from R
 License: file LICENSE
 LazyData: TRUE
 RoxygenNote: 5.0.1
